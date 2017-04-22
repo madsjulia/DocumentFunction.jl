@@ -1,7 +1,7 @@
 # __precompile__()
 
 """
-MADS: Model Analysis & Decision Support in Julia (Mads.jl v1.0) 2016
+MADS: Model Analysis & Decision Support in Julia (Mads.jl v1.0) 2017
 
 module DocumentFunction
 
