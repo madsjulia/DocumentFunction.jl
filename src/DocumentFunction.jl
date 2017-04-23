@@ -95,7 +95,8 @@ function getfunctionarguments(f::Function)
 	m = methods(f)
 	getfunctionarguments(f, string.(collect(m.ms)))
 end
-function getfunctionarguments(f::Function, m::Vector{String}, l::Integer=length(m))
+function getfunctionarguments(f::Function, m::Vector{String})
+	l = length(m)
 	mp = Array{Symbol}(0)
 	for i in 1:l
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
@@ -118,8 +119,9 @@ function getfunctionkeywords(f::Function)
 	m = methods(f)
 	getfunctionkeywords(f, string.(collect(m.ms)))
 end
-function getfunctionkeywords(f::Function, m::Vector{String}, l::Integer=length(m))
+function getfunctionkeywords(f::Function, m::Vector{String})
 	# getfunctionkeywords(f::Function) = methods(methods(f).mt.kwsorter).mt.defs.func.lambda_template.slotnames[4:end-4]
+	l = length(m)
 	mp = Array{Symbol}(0)
 	for i in 1:l
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
@@ -136,21 +138,27 @@ function getfunctionkeywords(f::Function, m::Vector{String}, l::Integer=length(m
 end
 
 @doc """
-Create function documentation
-
-$(documentfunction(documentfunction))
+$(DocumentFunction.documentfunction(documentfunction; 
+maintext="Create function documentation",
+argtext=Dict("f"=>"Function to be documented"),
+keytext=Dict("maintext"=>"Function description",
+             "argtext"=>"Dictionary with text for each argument",
+             "keytext"=>"Dictionary with text for each keyword",
+             "location"=>"Boolean to show/hide function location on the disk")))
 """ documentfunction
 
 @doc """
-Get function arguments
-
-$(documentfunction(getfunctionarguments))
+$(DocumentFunction.documentfunction(getfunctionarguments; 
+maintext="Get function arguments",
+argtext=Dict("f"=>"Function to be documented",
+             "m"=>"Function methods")))
 """ getfunctionarguments
 
 @doc """
-Get function keywords
-
-$(documentfunction(getfunctionkeywords))
+$(DocumentFunction.documentfunction(getfunctionkeywords; 
+maintext="Get function keywords",
+argtext=Dict("f"=>"Function to be documented",
+             "m"=>"Function methods")))
 """ getfunctionkeywords
 
 end
