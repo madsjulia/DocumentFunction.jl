@@ -138,7 +138,7 @@ function getfunctionkeywords(f::Function, m::Vector{String})
 end
 
 @doc """
-$(DocumentFunction.documentfunction(documentfunction; 
+$(DocumentFunction.documentfunction(documentfunction;
 maintext="Create function documentation",
 argtext=Dict("f"=>"Function to be documented"),
 keytext=Dict("maintext"=>"Function description",
@@ -148,14 +148,14 @@ keytext=Dict("maintext"=>"Function description",
 """ documentfunction
 
 @doc """
-$(DocumentFunction.documentfunction(getfunctionarguments; 
+$(DocumentFunction.documentfunction(getfunctionarguments;
 maintext="Get function arguments",
 argtext=Dict("f"=>"Function to be documented",
              "m"=>"Function methods")))
 """ getfunctionarguments
 
 @doc """
-$(DocumentFunction.documentfunction(getfunctionkeywords; 
+$(DocumentFunction.documentfunction(getfunctionkeywords;
 maintext="Get function keywords",
 argtext=Dict("f"=>"Function to be documented",
              "m"=>"Function methods")))
