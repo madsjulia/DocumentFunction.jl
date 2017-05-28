@@ -11,8 +11,14 @@ output = DocumentFunction.documentfunction(DocumentFunction.documentfunction;
 				 "keytext"=>"Dictionary with text for each keyword",
 				 "location"=>"Boolean to show/hide function location on the disk"))
 
+DocumentFunction.documentfunction(DocumentFunction.stdoutcaptureon; location=true)
+DocumentFunction.getfunctionkeywords(DocumentFunction.stdoutcaptureon)
+DocumentFunction.getfunctionarguments(DocumentFunction.stdoutcaptureon)
+
 @Base.Test.testset "Document" begin
 	@Base.Test.test output == expected
+    @Base.Test.test [] == DocumentFunction.getfunctionkeywords(DocumentFunction.stdoutcaptureon)
+    @Base.Test.test [] == DocumentFunction.getfunctionarguments(DocumentFunction.stdoutcaptureon)
 end
 
 :passed

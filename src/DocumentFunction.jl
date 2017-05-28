@@ -122,8 +122,7 @@ Keywords:
 """ documentfunction
 
 function getfunctionarguments(f::Function)
-	ms = getfunctionmethods(f)
-	getfunctionarguments(f, ms)
+	getfunctionarguments(f, getfunctionmethods(f))
 end
 function getfunctionarguments(f::Function, m::Vector{String})
 	l = length(m)
@@ -155,8 +154,7 @@ Arguments:
 """ getfunctionarguments
 
 function getfunctionkeywords(f::Function)
-	ms = getfunctionmethods(f)
-	getfunctionkeywords(f, ms)
+	getfunctionkeywords(f, getfunctionmethods(f))
 end
 function getfunctionkeywords(f::Function, m::Vector{String})
 	# getfunctionkeywords(f::Function) = methods(methods(f).mt.kwsorter).mt.defs.func.lambda_template.slotnames[4:end-4]
