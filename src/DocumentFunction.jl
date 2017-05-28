@@ -1,4 +1,4 @@
-# __precompile__()
+__precompile__()
 
 """
 MADS: Model Analysis & Decision Support in Julia (Mads.jl v1.0) 2017
@@ -34,6 +34,22 @@ function stdoutcaptureoff()
 	return output
 end
 
+"""
+Get function methods
+
+Arguments:
+
+- `f`: function to be documented
+
+Return:
+
+- array with function methods
+"""
+function getfunctionmethods(f::Function)
+	m = methods(f)
+	return convert(Array{String, 1}, strip.(split(string(m.mt), "\n"))[2:end])
+end
+
 function documentfunction(f::Function; location::Bool=true, maintext::String="", argtext::Dict=Dict(), keytext::Dict=Dict())
 	modulename = Base.function_module(f)
 	stdoutcaptureon()
@@ -41,8 +57,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 		println("**$(f)**\n")
 		println("$(maintext)\n")
 	end
-	m = methods(f)
-	ms = convert(Array{String, 1}, strip.(split(string(m.mt), "\n"))[2:end])
+	ms = getfunctionmethods(f)
 	nm = length(ms)
 	if nm == 0
 		println("No methods\n")
@@ -91,9 +106,24 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 	stdoutcaptureoff()
 end
 
+@doc """
+Create function documentation
+
+Arguments:
+
+- `f`: function to be documented"
+
+Keywords:
+
+- `maintext`: function description
+- `argtext`: dictionary with text for each argument
+- `keytext`: dictionary with text for each keyword
+- `location`: show/hide function location on the disk
+""" documentfunction
+
 function getfunctionarguments(f::Function)
-	m = methods(f)
-	getfunctionarguments(f, string.(collect(m.ms)))
+	ms = getfunctionmethods(f)
+	getfunctionarguments(f, ms)
 end
 function getfunctionarguments(f::Function, m::Vector{String})
 	l = length(m)
@@ -115,9 +145,18 @@ function getfunctionarguments(f::Function, m::Vector{String})
 	return sort(unique(mp))
 end
 
+@doc """
+Get function arguments
+
+Arguments:
+
+- `f`: function to be documented"
+- `m`: function methods
+""" getfunctionarguments
+
 function getfunctionkeywords(f::Function)
-	m = methods(f)
-	getfunctionkeywords(f, string.(collect(m.ms)))
+	ms = getfunctionmethods(f)
+	getfunctionkeywords(f, ms)
 end
 function getfunctionkeywords(f::Function, m::Vector{String})
 	# getfunctionkeywords(f::Function) = methods(methods(f).mt.kwsorter).mt.defs.func.lambda_template.slotnames[4:end-4]
@@ -138,27 +177,12 @@ function getfunctionkeywords(f::Function, m::Vector{String})
 end
 
 @doc """
-$(DocumentFunction.documentfunction(documentfunction;
-maintext="Create function documentation",
-argtext=Dict("f"=>"Function to be documented"),
-keytext=Dict("maintext"=>"Function description",
-             "argtext"=>"Dictionary with text for each argument",
-             "keytext"=>"Dictionary with text for each keyword",
-             "location"=>"Boolean to show/hide function location on the disk")))
-""" documentfunction
+Get function keywords
 
-@doc """
-$(DocumentFunction.documentfunction(getfunctionarguments;
-maintext="Get function arguments",
-argtext=Dict("f"=>"Function to be documented",
-             "m"=>"Function methods")))
-""" getfunctionarguments
+Arguments:
 
-@doc """
-$(DocumentFunction.documentfunction(getfunctionkeywords;
-maintext="Get function keywords",
-argtext=Dict("f"=>"Function to be documented",
-             "m"=>"Function methods")))
+- `f`: function to be documented
+- `m`: function methods
 """ getfunctionkeywords
 
 end
