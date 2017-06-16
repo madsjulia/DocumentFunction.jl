@@ -53,9 +53,9 @@ argtext=Dict("f"=>"Function to be documented",
 """ getfunctionarguments
 ```
 
-Execution of 
+Execution of
 
-`?getfunctionarguments`    
+`?getfunctionarguments`
 
 produces the following output:
 
@@ -78,3 +78,16 @@ produces the following output:
     •    m::Array{String,1} : Function methods
 
 ```
+
+Developers
+==========
+
+* [Velimir (monty) Vesselinov](http://www.lanl.gov/orgs/ees/staff/monty) [(publications)](http://scholar.google.com/citations?user=sIFHVvwAAAAJ)
+* [Daniel O'Malley](http://www.lanl.gov/expertise/profiles/view/daniel-o'malley) [(publications)](http://scholar.google.com/citations?user=rPzCVjEAAAAJ)
+* [see also](https://github.com/madsjulia/DocumentFunction.jl/graphs/contributors)
+
+Publications, Presentations, Projects
+=====================================
+
+* [mads.lanl.gov/](http://mads.lanl.gov/)
+* [ees.lanl.gov/monty](http://ees.lanl.gov/monty)
