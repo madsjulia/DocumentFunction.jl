@@ -1,6 +1,10 @@
 import DocumentFunction
 
-expected = "**DocumentFunction.documentfunction**\n\nCreate function documentation\n\nMethods\n - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext)`\nArguments\n - `f::Function` : Function to be documented\nKeywords\n - `argtext` : Dictionary with text for each argument\n - `keytext` : Dictionary with text for each keyword\n - `location` : Boolean to show/hide function location on the disk\n - `maintext` : Function description\n"
+if VERSION >= v"0.6.0"
+	expected = "**DocumentFunction.documentfunction**\n\nCreate function documentation\n\nMethods\n - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext) in DocumentFunction`\nArguments\n - `f::Function` : Function to be documented\nKeywords\n - `argtext` : Dictionary with text for each argument\n - `keytext` : Dictionary with text for each keyword\n - `location` : Boolean to show/hide function location on the disk\n - `maintext` : Function description\n"
+else
+	expected = "**DocumentFunction.documentfunction**\n\nCreate function documentation\n\nMethods\n - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext)`\nArguments\n - `f::Function` : Function to be documented\nKeywords\n - `argtext` : Dictionary with text for each argument\n - `keytext` : Dictionary with text for each keyword\n - `location` : Boolean to show/hide function location on the disk\n - `maintext` : Function description\n"
+end
 
 output = DocumentFunction.documentfunction(DocumentFunction.documentfunction;
 	location=false,
