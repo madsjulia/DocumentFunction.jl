@@ -1,5 +1,7 @@
 import DocumentFunction
 
+using Test
+
 if VERSION >= v"0.6.0"
 	expected = "**DocumentFunction.documentfunction**\n\nCreate function documentation\n\nMethods\n - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext) in DocumentFunction`\nArguments\n - `f::Function` : Function to be documented\nKeywords\n - `argtext` : Dictionary with text for each argument\n - `keytext` : Dictionary with text for each keyword\n - `location` : Boolean to show/hide function location on the disk\n - `maintext` : Function description\n"
 else
@@ -19,10 +21,10 @@ DocumentFunction.documentfunction(DocumentFunction.stdoutcaptureon; location=tru
 DocumentFunction.getfunctionkeywords(DocumentFunction.stdoutcaptureon)
 DocumentFunction.getfunctionarguments(DocumentFunction.stdoutcaptureon)
 
-@Base.Test.testset "Document" begin
-	@Base.Test.test output == expected
-    @Base.Test.test [] == DocumentFunction.getfunctionkeywords(DocumentFunction.stdoutcaptureon)
-    @Base.Test.test [] == DocumentFunction.getfunctionarguments(DocumentFunction.stdoutcaptureon)
+@testset "Document" begin
+    @test output == expected
+    @test [] == DocumentFunction.getfunctionkeywords(DocumentFunction.stdoutcaptureon)
+    @test [] == DocumentFunction.getfunctionarguments(DocumentFunction.stdoutcaptureon)
 end
 
 :passed
