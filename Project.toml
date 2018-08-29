@@ -1,0 +1,12 @@
+authors = ["Velimir (monty) Vesselinov"]
+name = "DocumentFunction"
+uuid = "5593b220-aad2-11e8-0680-d9fc7de3193b"
+version = "0.2.1"
+
+[deps]
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
