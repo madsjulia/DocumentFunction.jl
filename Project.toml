@@ -1,7 +1,7 @@
 authors = ["Velimir (monty) Vesselinov"]
 name = "DocumentFunction"
 uuid = "5593b220-aad2-11e8-0680-d9fc7de3193b"
-version = "0.2.1"
+version = "0.3.0"
 
 [deps]
 
