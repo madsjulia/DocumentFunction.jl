@@ -16,11 +16,11 @@ module DocumentFunction
 Redirect STDOUT to a reader
 """
 function stdoutcaptureon()
-	global outputoriginal = STDOUT;
+	global outputoriginal = stdout;
 	(outR, outW) = redirect_stdout();
 	global outputread = outR;
 	global outputwrite = outW;
-	global outputreader = @async readstring(outputread);
+	global outputreader = @async read(outputread, String);
 end
 
 """
@@ -29,9 +29,9 @@ Restore STDOUT
 function stdoutcaptureoff()
 	redirect_stdout(outputoriginal);
 	close(outputwrite);
-	output = wait(outputreader);
+	wait(outputreader);
 	close(outputread);
-	return output
+	return outputreader.result
 end
 
 """
@@ -51,7 +51,7 @@ function getfunctionmethods(f::Function)
 end
 
 function documentfunction(f::Function; location::Bool=true, maintext::String="", argtext::Dict=Dict(), keytext::Dict=Dict())
-	modulename = Base.function_module(f)
+	modulename = first(methods(f)).module
 	stdoutcaptureon()
 	if maintext != ""
 		println("**$(f)**\n")
@@ -65,10 +65,13 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 		println("Methods")
 		for i = 1:nm
 			s = strip.(split(ms[i], " at "))
+			m = match(r"(\[.+\]\s)(.*)", s[1]) # take string after [1..]
+			methodname = m.captures[2]
+
 			if location
-				println(" - `$modulename.$(s[1])` : $(s[2])")
+				println(" - `$modulename.$(methodname)` : $(s[2])")
 			else
-				println(" - `$modulename.$(s[1])`")
+				println(" - `$modulename.$(methodname)`")
 			end
 		end
 		a = getfunctionarguments(f, ms)
@@ -78,7 +81,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 			for i = 1:l
 				arg = strip(string(a[i]))
 				print(" - `$(arg)`")
-				if contains(arg, "::")
+				if occursin("::", arg)
 					arg = split(arg, "::")[1]
 				end
 				if haskey(argtext, arg)
@@ -126,16 +129,16 @@ function getfunctionarguments(f::Function)
 end
 function getfunctionarguments(f::Function, m::Vector{String})
 	l = length(m)
-	mp = Array{Symbol}(0)
+	mp = Array{String}(undef, 0)
 	for i in 1:l
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
-		if typeof(r) == Void
+		if typeof(r) == Nothing
 			r = match(r"(.*)\((.*)\)", m[i])
 		end
-		if typeof(r) != Void && length(r.captures) > 1
+		if typeof(r) != Nothing && length(r.captures) > 1
 			fargs = strip.(split(r.captures[2], ", "))
 			for j in 1:length(fargs)
-				if !contains(string(fargs[j]), "...") && fargs[j] != ""
+				if !occursin("...", string(fargs[j])) && fargs[j] != ""
 					push!(mp, fargs[j])
 				end
 			end
@@ -159,13 +162,13 @@ end
 function getfunctionkeywords(f::Function, m::Vector{String})
 	# getfunctionkeywords(f::Function) = methods(methods(f).mt.kwsorter).mt.defs.func.lambda_template.slotnames[4:end-4]
 	l = length(m)
-	mp = Array{Symbol}(0)
+	mp = Array{String}(undef, 0)
 	for i in 1:l
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
-		if typeof(r) != Void && length(r.captures) > 2
+		if typeof(r) != Nothing && length(r.captures) > 2
 			kwargs = strip.(split(r.captures[3], ", "))
 			for j in 1:length(kwargs)
-				if !contains(string(kwargs[j]), "...") && kwargs[j] != ""
+				if !occursin("...", string(kwargs[j])) && kwargs[j] != ""
 					push!(mp, kwargs[j])
 				end
 			end
