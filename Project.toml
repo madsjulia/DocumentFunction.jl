@@ -1,9 +1,7 @@
-authors = ["Velimir (monty) Vesselinov"]
 name = "DocumentFunction"
-uuid = "5593b220-aad2-11e8-0680-d9fc7de3193b"
+uuid = "e1f3b4f0-2dc4-57d3-83f7-d4b7faf3b05b"
+authors = ["Velimir (monty) Vesselinov"]
 version = "0.3.0"
-
-[deps]
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
