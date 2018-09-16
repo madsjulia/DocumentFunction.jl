@@ -2,6 +2,8 @@ DocumentFunction
 ================
 
 [![DocumentFunction](http://pkg.julialang.org/badges/DocumentFunction_0.5.svg)](http://pkg.julialang.org/?pkg=DocumentFunction&ver=0.5)
+[![DocumentFunction](http://pkg.julialang.org/badges/DocumentFunction_0.6.svg)](http://pkg.julialang.org/?pkg=DocumentFunction&ver=0.6)
+[![DocumentFunction](http://pkg.julialang.org/badges/DocumentFunction_0.7.svg)](http://pkg.julialang.org/?pkg=DocumentFunction&ver=0.7)
 [![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl)
 [![Coverage Status](https://coveralls.io/repos/madsjulia/DocumentFunction.jl/badge.svg?branch=master)](https://coveralls.io/r/madsjulia/DocumentFunction.jl?branch=master)
 
