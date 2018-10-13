@@ -29,7 +29,7 @@ Restore STDOUT
 function stdoutcaptureoff()
 	redirect_stdout(outputoriginal);
 	close(outputwrite);
-	wait(outputreader);
+	fetch(outputreader);
 	close(outputread);
 	return outputreader.result
 end
