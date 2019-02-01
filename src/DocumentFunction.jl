@@ -136,7 +136,11 @@ function getfunctionarguments(f::Function, m::Vector{String})
 			r = match(r"(.*)\((.*)\)", m[i])
 		end
 		if typeof(r) != Nothing && length(r.captures) > 1
-			fargs = strip.(split(r.captures[2], ", "))
+			s = split(r.captures[2], r",(?=[^\}]*(?:\{)|[^\)]*(?:\()|$)")
+			if length(s) == 1
+				s = split(r.captures[2], ", ")
+			end
+			fargs = strip.(s)
 			for j in 1:length(fargs)
 				if !occursin("...", string(fargs[j])) && fargs[j] != ""
 					push!(mp, fargs[j])
