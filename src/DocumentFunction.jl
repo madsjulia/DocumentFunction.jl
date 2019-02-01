@@ -170,8 +170,13 @@ function getfunctionkeywords(f::Function, m::Vector{String})
 	for i in 1:l
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
 		if typeof(r) != Nothing && length(r.captures) > 2
-			kwargs = strip.(split(r.captures[3], ", "))
+			s = split(r.captures[3], r",(?=[^\}]*(?:\{)|[^\)]*(?:\()|$)")
+			if length(s) == 1
+				s = split(r.captures[3], ", ")
+			end
+			kwargs = strip.(s)
 			for j in 1:length(kwargs)
+				@show
 				if !occursin("...", string(kwargs[j])) && kwargs[j] != ""
 					push!(mp, kwargs[j])
 				end
