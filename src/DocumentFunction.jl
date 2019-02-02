@@ -62,12 +62,11 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 	if nm == 0
 		println("No methods\n")
 	else
-		println("Methods")
+		println("Methods:")
 		for i = 1:nm
 			s = strip.(split(ms[i], " at "))
 			m = match(r"(\[.+\]\s)(.*)", s[1]) # take string after [1..]
 			methodname = m.captures[2]
-
 			if location
 				println(" - `$modulename.$(methodname)` : $(s[2])")
 			else
@@ -77,7 +76,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 		a = getfunctionarguments(f, ms)
 		l = length(a)
 		if l > 0
-			println("Arguments")
+			println("Arguments:")
 			for i = 1:l
 				arg = strip(string(a[i]))
 				print(" - `$(arg)`")
@@ -94,7 +93,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 		a = getfunctionkeywords(f, ms)
 		l = length(a)
 		if l > 0
-			println("Keywords")
+			println("Keywords:")
 			for i = 1:l
 				key = strip(string(a[i]))
 				print(" - `$(key)`")
@@ -136,10 +135,7 @@ function getfunctionarguments(f::Function, m::Vector{String})
 			r = match(r"(.*)\((.*)\)", m[i])
 		end
 		if typeof(r) != Nothing && length(r.captures) > 1
-			s = split(r.captures[2], r",(?=[^\}]*(?:\{)|[^\)]*(?:\()|$)")
-			if length(s) == 1
-				s = split(r.captures[2], ", ")
-			end
+			s = split(r.captures[2], r"(?![^)(]*\([^)(]*?\)\)),(?![^\{]*\})")
 			fargs = strip.(s)
 			for j in 1:length(fargs)
 				if !occursin("...", string(fargs[j])) && fargs[j] != ""
@@ -170,13 +166,9 @@ function getfunctionkeywords(f::Function, m::Vector{String})
 	for i in 1:l
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
 		if typeof(r) != Nothing && length(r.captures) > 2
-			s = split(r.captures[3], r",(?=[^\}]*(?:\{)|[^\)]*(?:\()|$)")
-			if length(s) == 1
-				s = split(r.captures[3], ", ")
-			end
+			s = split(r.captures[3], r"(?![^)(]*\([^)(]*?\)\)),(?![^\{]*\})")
 			kwargs = strip.(s)
 			for j in 1:length(kwargs)
-				@show
 				if !occursin("...", string(kwargs[j])) && kwargs[j] != ""
 					push!(mp, kwargs[j])
 				end
