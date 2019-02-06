@@ -28,6 +28,8 @@ Examples:
 print(documentfunction(documentfunction))
 ```
 
+output:
+
 ```
 Methods:
  - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext) in DocumentFunction` : /Users/monty/.julia/dev/DocumentFunction/src/DocumentFunction.jl:56
@@ -43,6 +45,8 @@ Keywords:
 ```
 print(documentfunction(occursin))
 ```
+
+output:
 
 ```
 Methods:
