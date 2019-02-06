@@ -63,7 +63,7 @@ Keywords:
  - `offset`
 ```
 
-Documentation Examples:
+Documentation Example:
 ---------
 
 ```julia
@@ -109,7 +109,7 @@ This will produces the following output:
 Projects using DocumentFunction
 =====================================
 
-* [MADS](https://github.com/madsjulia) (function documentation is produced using DocumentFunction: https://madsjulia.github.io/Mads.jl/Modules/Mads)
+* [MADS](https://github.com/madsjulia) (function documentation is produced using DocumentFunction: [https://madsjulia.github.io/Mads.jl/Modules/Mads](https://madsjulia.github.io/Mads.jl/Modules/Mads))
 * [TensorDecompositions](https://github.com/TensorDecompositions)
 
 Publications, Presentations, Projects
