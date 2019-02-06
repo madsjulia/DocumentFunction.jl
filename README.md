@@ -1,7 +1,7 @@
 DocumentFunction
 ================
 
-A module for documenting functions.
+A module for documenting Julia functions.
 It also provides methods to get function methods, arguments and keywords.
 
 [![DocumentFunction](http://pkg.julialang.org/badges/DocumentFunction_0.5.svg)](http://pkg.julialang.org/?pkg=DocumentFunction&ver=0.5)
@@ -24,13 +24,9 @@ using DocumentFunction
 Examples:
 ------------
 
-```
-print(documentfunction(documentfunction))
-```
+``` julia
+julia> print(documentfunction(documentfunction))
 
-output:
-
-```
 Methods:
  - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext) in DocumentFunction` : /Users/monty/.julia/dev/DocumentFunction/src/DocumentFunction.jl:56
 Arguments:
@@ -42,13 +38,9 @@ Keywords:
  - `maintext`
 ```
 
-```
-print(documentfunction(occursin))
-```
+``` julia
+julia> print(documentfunction(occursin))
 
-output:
-
-```
 Methods:
  - `Base.occursin(delim::UInt8, buf::Base.GenericIOBuffer{Array{UInt8,1}}) in Base` : iobuffer.jl:464
  - `Base.occursin(delim::UInt8, buf::Base.GenericIOBuffer) in Base` : iobuffer.jl:470
@@ -86,10 +78,10 @@ end
 
 @doc """
 $(DocumentFunction.documentfunction(foobar;
-location=false,
-maintext="Foobar function to do amazing stuff",
-argtext=Dict("f"=>"Input function ...",
-             "m"=>"Input string array ...")))
+    location=false,
+    maintext="Foobar function to do amazing stuff",
+    argtext=Dict("f"=>"Input function ...",
+                 "m"=>"Input string array ...")))
 """ foobar
 ```
 
@@ -114,10 +106,17 @@ This will produces the following output:
     •    m::Array{String,1} : Input string array ...
 ```
 
+Projects using DocumentFunction
+=====================================
+
+* [MADS](https://github.com/madsjulia) (function documentation is produced using DocumentFunction: https://madsjulia.github.io/Mads.jl/Modules/Mads)
+* [TensorDecompositions](https://github.com/TensorDecompositions)
 
 Publications, Presentations, Projects
 =====================================
 
 * [mads.gitlab.io](http://mads.gitlab.io)
+* [TensorDecompositions](https://tensordecompositions.github.io)
 * [monty.gitlab.io](http://monty.gitlab.io)
 * [ees.lanl.gov/monty](https://www.lanl.gov/orgs/ees/staff/monty)
+
