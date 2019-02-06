@@ -93,7 +93,8 @@ argtext=Dict("f"=>"Input function ...",
 """ foobar
 ```
 
-Getting the help for the function type "?foobar" which will produces the following output:
+To get the help for this new function type "?foobar".
+This will produces the following output:
 
 ```
   foobar
