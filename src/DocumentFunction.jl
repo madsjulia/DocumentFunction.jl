@@ -12,6 +12,8 @@ Licensing: GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 """
 module DocumentFunction
 
+export documentfunction, getfunctionmethods, getfunctionarguments, getfunctionkeywords
+
 """
 Redirect STDOUT to a reader
 """

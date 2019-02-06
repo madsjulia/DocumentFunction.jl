@@ -1,6 +1,9 @@
 DocumentFunction
 ================
 
+A module for documenting functions.
+It also provides methods to get function methods, arguments and keywords.
+
 [![DocumentFunction](http://pkg.julialang.org/badges/DocumentFunction_0.5.svg)](http://pkg.julialang.org/?pkg=DocumentFunction&ver=0.5)
 [![DocumentFunction](http://pkg.julialang.org/badges/DocumentFunction_0.6.svg)](http://pkg.julialang.org/?pkg=DocumentFunction&ver=0.6)
 [![DocumentFunction](http://pkg.julialang.org/badges/DocumentFunction_0.7.svg)](http://pkg.julialang.org/?pkg=DocumentFunction&ver=0.7)
@@ -13,83 +16,103 @@ Installation:
 ------------
 
 ```julia
-Pkg.add("DocumentFunction")
+import Pkg; Pkg.add("DocumentFunction")
+
+using DocumentFunction
 ```
 
-Example:
+Examples:
 ------------
+
+```
+print(documentfunction(documentfunction))
+```
+
+```
+Methods:
+ - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext) in DocumentFunction` : /Users/monty/.julia/dev/DocumentFunction/src/DocumentFunction.jl:56
+Arguments:
+ - `f::Function`
+Keywords:
+ - `argtext`
+ - `keytext`
+ - `location`
+ - `maintext`
+```
+
+```
+print(documentfunction(occursin))
+```
+
+```
+Methods:
+ - `Base.occursin(delim::UInt8, buf::Base.GenericIOBuffer{Array{UInt8,1}}) in Base` : iobuffer.jl:464
+ - `Base.occursin(delim::UInt8, buf::Base.GenericIOBuffer) in Base` : iobuffer.jl:470
+ - `Base.occursin(needle::Union{AbstractChar, AbstractString}, haystack::AbstractString) in Base` : strings/search.jl:452
+ - `Base.occursin(r::Regex, s::SubString; offset) in Base` : regex.jl:172
+ - `Base.occursin(r::Regex, s::AbstractString; offset) in Base` : regex.jl:166
+ - `Base.occursin(pattern::Tuple, r::Test.LogRecord) in Test` : /Users/osx/buildbot/slave/package_osx64/build/usr/share/julia/stdlib/v1.1/Test/src/logging.jl:211
+Arguments:
+ - `buf::Base.GenericIOBuffer`
+ - `buf::Base.GenericIOBuffer{Array{UInt8,1}}`
+ - `delim::UInt8`
+ - `haystack::AbstractString`
+ - `needle::Union{AbstractChar, AbstractString}`
+ - `pattern::Tuple`
+ - `r::Regex`
+ - `r::Test.LogRecord`
+ - `s::AbstractString`
+ - `s::SubString`
+Keywords:
+ - `offset`
+```
+
+Documentation Examples:
+---------
 
 ```julia
 import DocumentFunction
 
-function getfunctionarguments(f::Function)
-    m = methods(f)
-    getfunctionarguments(f, string.(collect(m.ms)))
+function foobar(f::Function)
+    return nothing
 end
-function getfunctionarguments(f::Function, m::Vector{String})
-    l = length(m)
-    mp = Array{Symbol}(0)
-    for i in 1:l
-        r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
-        if typeof(r) == Void
-            r = match(r"(.*)\((.*)\)", m[i])
-        end
-        if typeof(r) != Void && length(r.captures) > 1
-            fargs = strip.(split(r.captures[2], ", "))
-            for j in 1:length(fargs)
-                if !contains(string(fargs[j]), "...") && fargs[j] != ""
-                    push!(mp, fargs[j])
-                end
-            end
-        end
-    end
-    return sort(unique(mp))
+function foobar(f::Function, m::Vector{String})
+    return nothing
 end
 
 @doc """
-$(DocumentFunction.documentfunction(getfunctionarguments;
+$(DocumentFunction.documentfunction(foobar;
 location=false,
-maintext="Get function arguments",
-argtext=Dict("f"=>"Function to be documented",
-             "m"=>"Function methods")))
-""" getfunctionarguments
+maintext="Foobar function to do amazing stuff",
+argtext=Dict("f"=>"Input function ...",
+             "m"=>"Input string array ...")))
+""" foobar
 ```
 
-Execution of
-
-`?getfunctionarguments`
-
-produces the following output:
+Getting the help for the function type "?foobar" which will produces the following output:
 
 ```
-  DocumentFunction.getfunctionarguments
+  foobar
 
-  Get function arguments
+  Foobar function to do amazing stuff
 
-  Methods
+  Methods:
 
-    •    DocumentFunction.getfunctionarguments(f::Function)
+    •    Main.foobar(f::Function) in Main
 
-    •    DocumentFunction.getfunctionarguments(f::Function, m::Array{String,1})
+    •    Main.foobar(f::Function, m::Array{String,1}) in Main
 
+  Arguments:
 
-  Arguments
+    •    f::Function : Input function ...
 
-    •    f::Function : Function to be documented
-
-    •    m::Array{String,1} : Function methods
-
+    •    m::Array{String,1} : Input string array ...
 ```
 
-Developers
-==========
-
-* [Velimir (monty) Vesselinov](http://www.lanl.gov/orgs/ees/staff/monty) [(publications)](http://scholar.google.com/citations?user=sIFHVvwAAAAJ)
-* [Daniel O'Malley](http://www.lanl.gov/expertise/profiles/view/daniel-o'malley) [(publications)](http://scholar.google.com/citations?user=rPzCVjEAAAAJ)
-* [see also](https://github.com/madsjulia/DocumentFunction.jl/graphs/contributors)
 
 Publications, Presentations, Projects
 =====================================
 
-* [mads.lanl.gov/](http://mads.lanl.gov/)
-* [ees.lanl.gov/monty](http://ees.lanl.gov/monty)
+* [mads.gitlab.io](http://mads.gitlab.io)
+* [monty.gitlab.io](http://monty.gitlab.io)
+* [ees.lanl.gov/monty](https://www.lanl.gov/orgs/ees/staff/monty)
