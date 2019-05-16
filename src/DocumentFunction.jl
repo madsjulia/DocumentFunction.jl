@@ -15,28 +15,6 @@ module DocumentFunction
 export documentfunction, getfunctionmethods, getfunctionarguments, getfunctionkeywords
 
 """
-Redirect STDOUT to a reader
-"""
-function stdoutcaptureon()
-	global outputoriginal = stdout;
-	(outR, outW) = redirect_stdout();
-	global outputread = outR;
-	global outputwrite = outW;
-	global outputreader = @async read(outputread, String);
-end
-
-"""
-Restore STDOUT
-"""
-function stdoutcaptureoff()
-	redirect_stdout(outputoriginal);
-	close(outputwrite);
-	fetch(outputreader);
-	close(outputread);
-	return outputreader.result
-end
-
-"""
 Get function methods
 
 Arguments:
@@ -54,60 +32,60 @@ end
 
 function documentfunction(f::Function; location::Bool=true, maintext::String="", argtext::Dict=Dict(), keytext::Dict=Dict())
 	modulename = first(methods(f)).module
-	stdoutcaptureon()
-	if maintext != ""
-		println("**", parentmodule(f), ".", nameof(f), "**\n")
-		println("$(maintext)\n")
-	end
-	ms = getfunctionmethods(f)
-	nm = length(ms)
-	if nm == 0
-		println("No methods\n")
-	else
-		println("Methods:")
-		for i = 1:nm
-			s = strip.(split(ms[i], " at "))
-			m = match(r"(\[.+\]\s)(.*)", s[1]) # take string after [1..]
-			methodname = m.captures[2]
-			if location
-				println(" - `$modulename.$(methodname)` : $(s[2])")
-			else
-				println(" - `$modulename.$(methodname)`")
-			end
+	sprint() do io
+		if maintext != ""
+			println(io, "**", parentmodule(f), ".", nameof(f), "**\n")
+			println(io, "$(maintext)\n")
 		end
-		a = getfunctionarguments(f, ms)
-		l = length(a)
-		if l > 0
-			println("Arguments:")
-			for i = 1:l
-				arg = strip(string(a[i]))
-				print(" - `$(arg)`")
-				if occursin("::", arg)
-					arg = split(arg, "::")[1]
-				end
-				if haskey(argtext, arg)
-					println(" : $(argtext[arg])")
+		ms = getfunctionmethods(f)
+		nm = length(ms)
+		if nm == 0
+			println(io, "No methods\n")
+		else
+			println(io, "Methods:")
+			for i = 1:nm
+				s = strip.(split(ms[i], " at "))
+				m = match(r"(\[.+\]\s)(.*)", s[1]) # take string after [1..]
+				methodname = m.captures[2]
+				if location
+					println(io, " - `$modulename.$(methodname)` : $(s[2])")
 				else
-					println("")
+					println(io, " - `$modulename.$(methodname)`")
 				end
 			end
-		end
-		a = getfunctionkeywords(f, ms)
-		l = length(a)
-		if l > 0
-			println("Keywords:")
-			for i = 1:l
-				key = strip(string(a[i]))
-				print(" - `$(key)`")
-				if haskey(keytext, key)
-					println(" : $(keytext[key])")
-				else
-					println("")
+			a = getfunctionarguments(f, ms)
+			l = length(a)
+			if l > 0
+				println(io, "Arguments:")
+				for i = 1:l
+					arg = strip(string(a[i]))
+					print(io, " - `$(arg)`")
+					if occursin("::", arg)
+						arg = split(arg, "::")[1]
+					end
+					if haskey(argtext, arg)
+						println(io, " : $(argtext[arg])")
+					else
+						println(io, "")
+					end
+				end
+			end
+			a = getfunctionkeywords(f, ms)
+			l = length(a)
+			if l > 0
+				println(io, "Keywords:")
+				for i = 1:l
+					key = strip(string(a[i]))
+					print(io, " - `$(key)`")
+					if haskey(keytext, key)
+						println(io, " : $(keytext[key])")
+					else
+						println(io, "")
+					end
 				end
 			end
 		end
 	end
-	stdoutcaptureoff()
 end
 
 @doc """
