@@ -56,7 +56,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::String="",
 	modulename = first(methods(f)).module
 	stdoutcaptureon()
 	if maintext != ""
-		println("**$(f)**\n")
+		println("**", parentmodule(f), ".", nameof(f), "**\n")
 		println("$(maintext)\n")
 	end
 	ms = getfunctionmethods(f)
