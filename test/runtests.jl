@@ -13,14 +13,12 @@ output = DocumentFunction.documentfunction(DocumentFunction.documentfunction;
 				 "keytext"=>"Dictionary with text for each keyword",
 				 "location"=>"Boolean to show/hide function location on the disk"))
 
-DocumentFunction.documentfunction(DocumentFunction.stdoutcaptureon; location=true)
-DocumentFunction.getfunctionkeywords(DocumentFunction.stdoutcaptureon)
-DocumentFunction.getfunctionarguments(DocumentFunction.stdoutcaptureon)
-
+DocumentFunction.documentfunction(DocumentFunction.documentfunction; location=true)
+noargfunction() = nothing
 @Test.testset "Document" begin
     @Test.test output == expected
-    @Test.test [] == DocumentFunction.getfunctionkeywords(DocumentFunction.stdoutcaptureon)
-    @Test.test [] == DocumentFunction.getfunctionarguments(DocumentFunction.stdoutcaptureon)
+    @Test.test [] == DocumentFunction.getfunctionkeywords(DocumentFunction.getfunctionmethods)
+    @Test.test [] == DocumentFunction.getfunctionarguments(noargfunction)
 end
 
 :passed
