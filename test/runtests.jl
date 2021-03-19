@@ -16,9 +16,9 @@ output = DocumentFunction.documentfunction(DocumentFunction.documentfunction;
 DocumentFunction.documentfunction(DocumentFunction.documentfunction; location=true)
 noargfunction() = nothing
 @Test.testset "Document" begin
-    @Test.test output == expected
-    @Test.test [] == DocumentFunction.getfunctionkeywords(DocumentFunction.getfunctionmethods)
-    @Test.test [] == DocumentFunction.getfunctionarguments(noargfunction)
+	@Test.test output == expected
+	@Test.test [] == DocumentFunction.getfunctionkeywords(DocumentFunction.getfunctionmethods)
+	@Test.test [] == DocumentFunction.getfunctionarguments(noargfunction)
 end
 
 :passed
