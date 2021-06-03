@@ -30,7 +30,7 @@ function getfunctionmethods(f::Function)
 	return convert(Array{String, 1}, strip.(split(string(m.mt), "\n"))[2:end])
 end
 
-function documentfunction(f::Function; location::Bool=true, maintext::String="", argtext::Dict=Dict(), keytext::Dict=Dict())
+function documentfunction(f::Function; location::Bool=true, maintext::AbstractString="", argtext::Dict=Dict(), keytext::Dict=Dict())
 	modulename = first(methods(f)).module
 	sprint() do io
 		if maintext != ""
@@ -106,7 +106,7 @@ Keywords:
 function getfunctionarguments(f::Function)
 	getfunctionarguments(f, getfunctionmethods(f))
 end
-function getfunctionarguments(f::Function, m::Vector{String})
+function getfunctionarguments(f::Function, m::AbstractVector{String})
 	l = length(m)
 	mp = Array{String}(undef, 0)
 	for i in 1:l
@@ -139,7 +139,7 @@ Arguments:
 function getfunctionkeywords(f::Function)
 	getfunctionkeywords(f, getfunctionmethods(f))
 end
-function getfunctionkeywords(f::Function, m::Vector{String})
+function getfunctionkeywords(f::Function, m::AbstractVector{String})
 	# getfunctionkeywords(f::Function) = methods(methods(f).mt.kwsorter).mt.defs.func.lambda_template.slotnames[4:end-4]
 	l = length(m)
 	mp = Array{String}(undef, 0)
