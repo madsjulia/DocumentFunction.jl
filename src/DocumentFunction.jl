@@ -88,6 +88,23 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 	end
 end
 
+function get_method_from_name(m::Module, f::Function)
+	f = getfield(m, Symbol(f))
+	ms = collect(methods(f))[1]
+	args = Base.method_argnames(ms)
+	kwargs = Base.kwarg_decl(ms)
+	if any(kwargs .== Symbol("kw..."))
+		kwargs = kwargs[1:end-1]
+	end
+
+	return Dict{Symbol, Any}(
+		:name => f,
+		:method => ms,
+		:args => args[2:end],
+		:kwargs => kwargs
+	)
+end
+
 @doc """
 Create function documentation
 
