@@ -1,11 +1,8 @@
 __precompile__()
 
 """
-MADS: Model Analysis & Decision Support in Julia (Mads.jl v1.0) 2017
+DocumentFunction
 
-module DocumentFunction
-
-http://mads.lanl.gov
 https://github.com/madsjulia
 
 Licensing: GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,7 +24,7 @@ Return:
 """
 function getfunctionmethods(f::Function)
 	m = methods(f)
-	return convert(Array{String, 1}, strip.(split(string(m.mt), "\n"))[2:end])
+	return unique(sort(convert(Array{String, 1}, strip.(split(string(m.mt), "\n"))[2:end])))
 end
 
 function documentfunction(f::Function; location::Bool=true, maintext::AbstractString="", argtext::Dict=Dict(), keytext::Dict=Dict())
@@ -110,7 +107,7 @@ Create function documentation
 
 Arguments:
 
-- `f`: function to be documented"
+- `f`: function to be documented
 
 Keywords:
 
