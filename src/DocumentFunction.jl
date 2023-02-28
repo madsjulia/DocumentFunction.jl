@@ -24,7 +24,7 @@ Return:
 """
 function getfunctionmethods(f::Function)
 	m = methods(f)
-	return unique(sort(convert(Array{String, 1}, strip.(split(string(m.mt), "\n"))[2:end])))
+	return unique(sort(string.(m)))
 end
 
 function documentfunction(f::Function; location::Bool=true, maintext::AbstractString="", argtext::Dict=Dict(), keytext::Dict=Dict())
@@ -41,11 +41,19 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 		else
 			println(io, "Methods:")
 			for i = 1:nm
-				s = strip.(split(ms[i], " at "))
-				m = match(r"(\[.+\]\s)(.*)", s[1]) # take string after [1..]
-				methodname = m.captures[2]
+				if contains(ms[1], " at ")
+					s = strip.(split(ms[i], " at "))
+					ss = strip.(split(s[2], " in "))
+					methodname = ss[1]
+					loc = s[2]
+				else
+					s = strip.(split(ms[i], " @ "))
+					ss = strip.(split(s[2], " "))
+					methodname = ss[1]
+					loc = ss[2]
+				end
 				if location
-					println(io, " - `$modulename.$(methodname)` : $(s[2])")
+					println(io, " - `$modulename.$(methodname)` : $(loc)")
 				else
 					println(io, " - `$modulename.$(methodname)`")
 				end
