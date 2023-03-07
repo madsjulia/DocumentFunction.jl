@@ -7,8 +7,6 @@ It also provides methods to get function methods, arguments and keywords.
 [![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl)
 [![Coverage Status](https://coveralls.io/repos/madsjulia/DocumentFunction.jl/badge.svg?branch=master)](https://coveralls.io/r/madsjulia/DocumentFunction.jl?branch=master)
 
-DocumentFunction is a module of [MADS](https://github.com/madsjulia) (Model Analysis & Decision Support).
-
 Installation:
 ------------
 
