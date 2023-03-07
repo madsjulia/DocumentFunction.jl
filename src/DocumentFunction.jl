@@ -43,13 +43,13 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 			for i = 1:nm
 				if contains(ms[1], " at ")
 					s = strip.(split(ms[i], " at "))
-					ss = strip.(split(s[2], " in "))
+					ss = strip.(split(s[1], " in "))
 					methodname = ss[1]
 					loc = s[2]
 				else
 					s = strip.(split(ms[i], " @ "))
 					ss = strip.(split(s[2], " "))
-					methodname = ss[1]
+					methodname = s[1]
 					loc = ss[2]
 				end
 				if location
