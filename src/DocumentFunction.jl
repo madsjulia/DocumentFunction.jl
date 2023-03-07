@@ -24,7 +24,7 @@ Return:
 """
 function getfunctionmethods(f::Function)
 	m = methods(f)
-	return unique(sort(string.(m)))
+	return unique(sort(string.(m.ms)))
 end
 
 function documentfunction(f::Function; location::Bool=true, maintext::AbstractString="", argtext::Dict=Dict(), keytext::Dict=Dict())
