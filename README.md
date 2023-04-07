@@ -4,7 +4,7 @@ DocumentFunction
 A module for documenting Julia functions.
 It also provides methods to get function methods, arguments and keywords.
 
-[![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl)
+# [![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl)
 [![Coverage Status](https://coveralls.io/repos/madsjulia/DocumentFunction.jl/badge.svg?branch=master)](https://coveralls.io/r/madsjulia/DocumentFunction.jl?branch=master)
 
 Installation:
@@ -105,7 +105,7 @@ Projects using DocumentFunction
 -----------------
 
 * [MADS](https://github.com/madsjulia) (function documentation is produced using DocumentFunction: [https://madsjulia.github.io/Mads.jl/Modules/Mads](https://madsjulia.github.io/Mads.jl/Modules/Mads))
-* [TensorDecompositions](https://github.com/TensorDecompositions)
+* [SmartTensors](https://github.com/SmartTensors)
 
 Publications, Presentations, Projects
 ----------------
