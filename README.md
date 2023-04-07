@@ -83,7 +83,8 @@ $(DocumentFunction.documentfunction(foobar;
 """ foobar
 ```
 
-To get the help for this new function type "?foobar".
+To get the help for this new function type `?foobar`.
+
 This will produces the following output:
 
 ```
@@ -121,7 +122,7 @@ Publications, Presentations, Projects
 ----------------
 
 * [mads.gitlab.io](http://mads.gitlab.io)
-* [TensorDecompositions](https://tensordecompositions.github.io)
+* [SmartTensors](https://SmartTensors.github.io)
 * [monty.gitlab.io](http://monty.gitlab.io)
 * [ees.lanl.gov/monty](https://www.lanl.gov/orgs/ees/staff/monty)
 
