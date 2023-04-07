@@ -103,11 +103,12 @@ This will produces the following output:
 
     •    m::Array{String,1} : Input string array ...
     
-  Keyworks:
+  Keywords:
 
     •    key1 : Key 1 ...
 
     •    key2 : Key 2 ...    
+
 ```
 
 Projects using DocumentFunction
