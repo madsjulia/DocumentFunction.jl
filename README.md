@@ -68,16 +68,18 @@ import DocumentFunction
 function foobar(f::Function)
     return nothing
 end
-function foobar(f::Function, m::Vector{String})
+function foobar(f::Function, m::Vector{String}; key1::Bool, key2::String)
     return nothing
 end
 
 @doc """
 $(DocumentFunction.documentfunction(foobar;
     location=false,
-    maintext="Foobar function to do amazing stuff",
+    maintext="Foobar function to do amazing stuff!",
     argtext=Dict("f"=>"Input function ...",
                  "m"=>"Input string array ...")))
+    keytext=Dict("key1"=>"Key 1 ...",
+                 "key2"=>"Key 2 ...")))                 
 """ foobar
 ```
 
@@ -87,7 +89,7 @@ This will produces the following output:
 ```
   foobar
 
-  Foobar function to do amazing stuff
+  Foobar function to do amazing stuff!
 
   Methods:
 
@@ -100,6 +102,12 @@ This will produces the following output:
     •    f::Function : Input function ...
 
     •    m::Array{String,1} : Input string array ...
+    
+  Keyworks:
+
+    •    key1 : Key 1 ...
+
+    •    key2 : Key 2 ...    
 ```
 
 Projects using DocumentFunction
