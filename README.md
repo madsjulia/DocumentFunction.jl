@@ -2,7 +2,8 @@ DocumentFunction
 ================
 
 A module for documenting Julia functions.
-It also provides methods to get function methods, arguments and keywords.
+
+It also provides methods to document function methods, arguments and keywords.
 
 <!-- [![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl) -->
 [![Coverage Status](https://coveralls.io/repos/madsjulia/DocumentFunction.jl/badge.svg?branch=master)](https://coveralls.io/r/madsjulia/DocumentFunction.jl?branch=master)
