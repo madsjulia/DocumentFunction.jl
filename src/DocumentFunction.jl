@@ -69,7 +69,9 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 						arg = split(arg, "::")[1]
 					end
 					if haskey(argtext, arg)
-						println(io, " : $(argtext[arg])")
+						at = argtext[arg]
+						uppercasefirst(replace(at, "_"=>" "))
+						println(io, " : $(at)")
 					else
 						println(io, "")
 					end
@@ -83,7 +85,9 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 					key = strip(string(a[i]))
 					print(io, " - `$(key)`")
 					if haskey(keytext, key)
-						println(io, " : $(keytext[key])")
+						kt = keytext[key]
+						uppercasefirst(replace(kt, "_"=>" "))
+						println(io, " : $(kt)")
 					else
 						println(io, "")
 					end
