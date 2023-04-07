@@ -64,17 +64,16 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 				println(io, "Arguments:")
 				for i = 1:l
 					arg = strip(string(a[i]))
-					print(io, " - `$(arg)`")
 					if occursin("::", arg)
-						arg = split(arg, "::")[1]
+						arg = first(split(arg, "::"))
 					end
 					if haskey(argtext, arg)
 						at = argtext[arg]
-						uppercasefirst(replace(at, "_"=>" "))
-						println(io, " : $(at)")
+						at = uppercasefirst(replace(at, "_"=>" "))
 					else
-						println(io, "")
+						at = uppercasefirst(replace(arg, "_"=>" "))
 					end
+					println(io, " - `$(arg)` : $(at)")
 				end
 			end
 			a = getfunctionkeywords(f, ms)
@@ -83,14 +82,13 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 				println(io, "Keywords:")
 				for i = 1:l
 					key = strip(string(a[i]))
-					print(io, " - `$(key)`")
 					if haskey(keytext, key)
 						kt = keytext[key]
-						uppercasefirst(replace(kt, "_"=>" "))
-						println(io, " : $(kt)")
+						kt = uppercasefirst(replace(kt, "_"=>" "))
 					else
-						println(io, "")
+						kt = uppercasefirst(replace(key, "_"=>" "))
 					end
+					println(io, " - `$(key)` : $(kt)")
 				end
 			end
 		end
@@ -99,7 +97,7 @@ end
 
 function get_method_from_name(m::Module, f::Function)
 	f = getfield(m, Symbol(f))
-	ms = collect(methods(f))[1]
+	ms = first(collect(methods(f)))
 	args = Base.method_argnames(ms)
 	kwargs = Base.kwarg_decl(ms)
 	if any(kwargs .== Symbol("kw..."))
