@@ -41,7 +41,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 		else
 			println(io, "Methods:")
 			for i = 1:nm
-				if contains(ms[1], " at ")
+				if contains(ms[i], " at ")
 					s = strip.(split(ms[i], " at "))
 					ss = strip.(split(s[1], " in "))
 					methodname = ss[1]
@@ -53,7 +53,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 					loc = ss[2]
 				end
 				if location
-					println(io, " - `$modulename.$(methodname)` : $(loc)")
+					println(io, " - `$modulename.$(methodname)` : `$(loc)`")
 				else
 					println(io, " - `$modulename.$(methodname)`")
 				end
