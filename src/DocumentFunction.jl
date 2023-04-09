@@ -58,7 +58,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 					println(io, " - `$modulename.$(methodname)`")
 				end
 			end
-			a = getfunctionarguments(f, ms)
+			a = getfunctionarguments(ms)
 			l = length(a)
 			if l > 0
 				println(io, "Arguments:")
@@ -76,7 +76,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 					println(io, " - `$(arg)` : $(at)")
 				end
 			end
-			a = getfunctionkeywords(f, ms)
+			a = getfunctionkeywords(ms)
 			l = length(a)
 			if l > 0
 				println(io, "Keywords:")
@@ -128,12 +128,11 @@ Keywords:
 """ documentfunction
 
 function getfunctionarguments(f::Function)
-	getfunctionarguments(f, getfunctionmethods(f))
+	getfunctionarguments(getfunctionmethods(f))
 end
-function getfunctionarguments(f::Function, m::AbstractVector{String})
-	l = length(m)
+function getfunctionarguments(m::AbstractVector{String})
 	mp = Array{String}(undef, 0)
-	for i in 1:l
+	for i in eachindex(m)
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
 		if typeof(r) == Nothing
 			r = match(r"(.*)\((.*)\)", m[i])
@@ -148,7 +147,7 @@ function getfunctionarguments(f::Function, m::AbstractVector{String})
 			end
 		end
 	end
-	return sort(unique(mp))
+	return unique(mp)
 end
 
 @doc """
@@ -161,13 +160,12 @@ Arguments:
 """ getfunctionarguments
 
 function getfunctionkeywords(f::Function)
-	getfunctionkeywords(f, getfunctionmethods(f))
+	getfunctionkeywords(getfunctionmethods(f))
 end
-function getfunctionkeywords(f::Function, m::AbstractVector{String})
+function getfunctionkeywords(m::AbstractVector{String})
 	# getfunctionkeywords(f::Function) = methods(methods(f).mt.kwsorter).mt.defs.func.lambda_template.slotnames[4:end-4]
-	l = length(m)
 	mp = Array{String}(undef, 0)
-	for i in 1:l
+	for i in eachindex(m)
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
 		if typeof(r) != Nothing && length(r.captures) > 2
 			s = split(r.captures[3], r"(?![^)(]*\([^)(]*?\)\)),(?![^\{]*\})")
@@ -179,7 +177,7 @@ function getfunctionkeywords(f::Function, m::AbstractVector{String})
 			end
 		end
 	end
-	return sort(unique(mp))
+	return unique(mp)
 end
 
 @doc """
