@@ -2,9 +2,10 @@ DocumentFunction
 ================
 
 A module for documenting Julia functions.
-It also provides methods to get function methods, arguments and keywords.
 
-[![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl)
+It also provides methods to document function methods, arguments and keywords.
+
+<!-- [![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl) -->
 [![Coverage Status](https://coveralls.io/repos/madsjulia/DocumentFunction.jl/badge.svg?branch=master)](https://coveralls.io/r/madsjulia/DocumentFunction.jl?branch=master)
 
 Installation:
@@ -67,26 +68,29 @@ import DocumentFunction
 function foobar(f::Function)
     return nothing
 end
-function foobar(f::Function, m::Vector{String})
+function foobar(f::Function, m::Vector{String}; key1::Bool, key2::String)
     return nothing
 end
 
 @doc """
 $(DocumentFunction.documentfunction(foobar;
     location=false,
-    maintext="Foobar function to do amazing stuff",
+    maintext="Foobar function to do amazing stuff!",
     argtext=Dict("f"=>"Input function ...",
                  "m"=>"Input string array ...")))
+    keytext=Dict("key1"=>"Key 1 ...",
+                 "key2"=>"Key 2 ...")))                 
 """ foobar
 ```
 
-To get the help for this new function type "?foobar".
+To get the help for this new function type `?foobar`.
+
 This will produces the following output:
 
 ```
   foobar
 
-  Foobar function to do amazing stuff
+  Foobar function to do amazing stuff!
 
   Methods:
 
@@ -99,19 +103,26 @@ This will produces the following output:
     •    f::Function : Input function ...
 
     •    m::Array{String,1} : Input string array ...
+    
+  Keywords:
+
+    •    key1 : Key 1 ...
+
+    •    key2 : Key 2 ...    
+
 ```
 
 Projects using DocumentFunction
 -----------------
 
 * [MADS](https://github.com/madsjulia) (function documentation is produced using DocumentFunction: [https://madsjulia.github.io/Mads.jl/Modules/Mads](https://madsjulia.github.io/Mads.jl/Modules/Mads))
-* [TensorDecompositions](https://github.com/TensorDecompositions)
+* [SmartTensors](https://github.com/SmartTensors)
 
 Publications, Presentations, Projects
 ----------------
 
 * [mads.gitlab.io](http://mads.gitlab.io)
-* [TensorDecompositions](https://tensordecompositions.github.io)
+* [SmartTensors](https://SmartTensors.github.io)
 * [monty.gitlab.io](http://monty.gitlab.io)
 * [ees.lanl.gov/monty](https://www.lanl.gov/orgs/ees/staff/monty)
 
