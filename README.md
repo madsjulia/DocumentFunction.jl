@@ -118,11 +118,20 @@ Projects using DocumentFunction
 * [MADS](https://github.com/madsjulia) (function documentation is produced using DocumentFunction: [https://madsjulia.github.io/Mads.jl/Modules/Mads](https://madsjulia.github.io/Mads.jl/Modules/Mads))
 * [SmartTensors](https://github.com/SmartTensors)
 
-Publications, Presentations, Projects
-----------------
+Projects:
+---------
+
+* [MADS](https://github.com/madsjulia)
+* [SmartTensors](https://github.com/SmartTensors)
+* [SmartML](https://github.com/SmartTensors/SmartML.jl)
+
+Publications, Presentations
+--------------------------
 
 * [mads.gitlab.io](http://mads.gitlab.io)
+* [madsjulia.github.io](https://madsjulia.github.io)
 * [SmartTensors](https://SmartTensors.github.io)
+* [SmartTensors.com](https://SmartTensors.com)
 * [monty.gitlab.io](http://monty.gitlab.io)
-* [ees.lanl.gov/monty](https://www.lanl.gov/orgs/ees/staff/monty)
+* [montyv.github.io](https://montyv.github.io)
 
