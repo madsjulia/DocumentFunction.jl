@@ -163,7 +163,6 @@ function getfunctionkeywords(f::Function)
 	getfunctionkeywords(getfunctionmethods(f))
 end
 function getfunctionkeywords(m::AbstractVector{String})
-	# getfunctionkeywords(f::Function) = methods(methods(f).mt.kwsorter).mt.defs.func.lambda_template.slotnames[4:end-4]
 	mp = Array{String}(undef, 0)
 	for i in eachindex(m)
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
