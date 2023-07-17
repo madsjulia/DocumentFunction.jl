@@ -134,10 +134,10 @@ function getfunctionarguments(m::AbstractVector{String})
 	mp = Array{String}(undef, 0)
 	for i in eachindex(m)
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
-		if typeof(r) == Nothing
+		if isnothing(r)
 			r = match(r"(.*)\((.*)\)", m[i])
 		end
-		if typeof(r) != Nothing && length(r.captures) > 1
+		if !isnothing(r) && length(r.captures) > 1
 			s = split(r.captures[2], r"(?![^)(]*\([^)(]*?\)\)),(?![^\{]*\})")
 			fargs = strip.(s)
 			for j in 1:length(fargs)
@@ -166,7 +166,7 @@ function getfunctionkeywords(m::AbstractVector{String})
 	mp = Array{String}(undef, 0)
 	for i in eachindex(m)
 		r = match(r"(.*)\(([^;]*);(.*)\)", m[i])
-		if typeof(r) != Nothing && length(r.captures) > 2
+		if !isnothing(r)  && length(r.captures) > 2
 			s = split(r.captures[3], r"(?![^)(]*\([^)(]*?\)\)),(?![^\{]*\})")
 			kwargs = strip.(s)
 			for j in 1:length(kwargs)
