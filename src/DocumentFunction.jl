@@ -140,7 +140,7 @@ function getfunctionarguments(m::AbstractVector{String})
 		if !isnothing(r) && length(r.captures) > 1
 			s = split(r.captures[2], r"(?![^)(]*\([^)(]*?\)\)),(?![^\{]*\})")
 			fargs = strip.(s)
-			for j in 1:length(fargs)
+			for j = eachindex(fargs)
 				if !occursin("...", string(fargs[j])) && fargs[j] != ""
 					push!(mp, fargs[j])
 				end
@@ -169,7 +169,7 @@ function getfunctionkeywords(m::AbstractVector{String})
 		if !isnothing(r)  && length(r.captures) > 2
 			s = split(r.captures[3], r"(?![^)(]*\([^)(]*?\)\)),(?![^\{]*\})")
 			kwargs = strip.(s)
-			for j in 1:length(kwargs)
+			for j = eachindex(kwargs)
 				if !occursin("...", string(kwargs[j])) && kwargs[j] != ""
 					push!(mp, kwargs[j])
 				end
