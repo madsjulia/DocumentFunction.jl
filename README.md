@@ -1,7 +1,7 @@
 DocumentFunction
 ================
 
-A module for documenting Julia functions and their arguments and keywords.
+Documenting Julia functions and their arguments and keywords.
 
 <!-- [![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl) -->
 [![Coverage Status](https://coveralls.io/repos/madsjulia/DocumentFunction.jl/badge.svg?branch=master)](https://coveralls.io/r/madsjulia/DocumentFunction.jl?branch=master)
@@ -79,9 +79,9 @@ $(DocumentFunction.documentfunction(foobar;
 """ foobar
 ```
 
-To get the help for this new function type `?foobar`.
+To get help for this new function, type `?foobar`.
 
-This will produces the following output:
+This will produce the following output:
 
 ```
 Main.foobar
