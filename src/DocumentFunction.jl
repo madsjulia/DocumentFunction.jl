@@ -11,6 +11,60 @@ module DocumentFunction
 
 export documentfunction, getfunctionmethods, getfunctionarguments, getfunctionkeywords
 
+_METHOD_SELF_NAME = Symbol("#self#")
+
+function _method_argnames_no_self(m::Method)
+	argnames = Base.method_argnames(m)
+	if !isempty(argnames) && argnames[1] == _METHOD_SELF_NAME
+		return argnames[2:end]
+	end
+	return argnames
+end
+
+function _method_kwarg_names(m::Method)
+	kwargs = Base.kwarg_decl(m)
+	# Julia uses `kw...` to indicate keyword varargs; exclude it.
+	if any(kwargs .== Symbol("kw..."))
+		kwargs = kwargs[1:end-1]
+	end
+	return kwargs
+end
+
+function _is_vararg_signature(m::Method)
+	sig = Base.unwrap_unionall(m.sig)
+	params = sig.parameters
+	return !isempty(params) && Base.isvarargtype(params[end])
+end
+
+function _getfunctionarguments(methods_vec::AbstractVector{Method})
+	args = String[]
+	for m in methods_vec
+		argnames = _method_argnames_no_self(m)
+		if isempty(argnames)
+			continue
+		end
+		is_vararg = _is_vararg_signature(m)
+		for (i, a) in enumerate(argnames)
+			# Legacy behavior: do not list varargs ("...")
+			if is_vararg && i == length(argnames)
+				continue
+			end
+			push!(args, string(a))
+		end
+	end
+	return unique(args)
+end
+
+function _getfunctionkeywords(methods_vec::AbstractVector{Method})
+	keys = String[]
+	for m in methods_vec
+		for k in _method_kwarg_names(m)
+			push!(keys, string(k))
+		end
+	end
+	return unique(keys)
+end
+
 """
 Get function methods
 
@@ -58,7 +112,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 					println(io, " - `$modulename.$(methodname)`")
 				end
 			end
-			a = getfunctionarguments(ms)
+			a = getfunctionarguments(f)
 			l = length(a)
 			if l > 0
 				println(io, "Arguments:")
@@ -76,7 +130,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 					println(io, " - `$(arg)` : $(at)")
 				end
 			end
-			a = getfunctionkeywords(ms)
+			a = getfunctionkeywords(f)
 			l = length(a)
 			if l > 0
 				println(io, "Keywords:")
@@ -128,7 +182,7 @@ Keywords:
 """ documentfunction
 
 function getfunctionarguments(f::Function)
-	getfunctionarguments(getfunctionmethods(f))
+	return _getfunctionarguments(collect(methods(f)))
 end
 function getfunctionarguments(m::AbstractVector{String})
 	mp = Array{String}(undef, 0)
@@ -160,7 +214,7 @@ Arguments:
 """ getfunctionarguments
 
 function getfunctionkeywords(f::Function)
-	getfunctionkeywords(getfunctionmethods(f))
+	return _getfunctionkeywords(collect(methods(f)))
 end
 function getfunctionkeywords(m::AbstractVector{String})
 	mp = Array{String}(undef, 0)
