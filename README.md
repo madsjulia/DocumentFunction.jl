@@ -1,9 +1,7 @@
 DocumentFunction
 ================
 
-A module for documenting Julia functions.
-
-It also provides methods to document function methods, arguments and keywords.
+Documenting Julia functions and their arguments and keywords.
 
 <!-- [![Build Status](https://travis-ci.org/madsjulia/DocumentFunction.jl.svg?branch=master)](https://travis-ci.org/madsjulia/DocumentFunction.jl) -->
 [![Coverage Status](https://coveralls.io/repos/madsjulia/DocumentFunction.jl/badge.svg?branch=master)](https://coveralls.io/r/madsjulia/DocumentFunction.jl?branch=master)
@@ -14,49 +12,48 @@ Installation:
 ```julia
 import Pkg; Pkg.add("DocumentFunction")
 
-using DocumentFunction
+import DocumentFunction
 ```
 
 Examples:
 ------------
 
 ``` julia
-julia> print(documentfunction(documentfunction))
+julia> print(DocumentFunction.documentfunction(DocumentFunction.documentfunction))
 
 Methods:
- - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext) in DocumentFunction` : /Users/monty/.julia/dev/DocumentFunction/src/DocumentFunction.jl:56
+ - `DocumentFunction.documentfunction(f::Function; location, maintext, argtext, keytext)` : `C:\Users\monty\.julia\dev\DocumentFunction\src\DocumentFunction.jl:26`
 Arguments:
- - `f::Function`
+ - `f` :: `Function` : F
 Keywords:
- - `argtext`
- - `keytext`
- - `location`
- - `maintext`
+ - `location` : Location
+ - `maintext` : Maintext
+ - `argtext` : Argtext
+ - `keytext` : Keytext
 ```
 
 ``` julia
-julia> print(documentfunction(occursin))
+julia> print(DocumentFunction.documentfunction(occursin))
 
 Methods:
- - `Base.occursin(delim::UInt8, buf::Base.GenericIOBuffer{Array{UInt8,1}}) in Base` : iobuffer.jl:464
- - `Base.occursin(delim::UInt8, buf::Base.GenericIOBuffer) in Base` : iobuffer.jl:470
- - `Base.occursin(needle::Union{AbstractChar, AbstractString}, haystack::AbstractString) in Base` : strings/search.jl:452
- - `Base.occursin(r::Regex, s::SubString; offset) in Base` : regex.jl:172
- - `Base.occursin(r::Regex, s::AbstractString; offset) in Base` : regex.jl:166
- - `Base.occursin(pattern::Tuple, r::Test.LogRecord) in Test` : /Users/osx/buildbot/slave/package_osx64/build/usr/share/julia/stdlib/v1.1/Test/src/logging.jl:211
+ - `Base.occursin(delim::UInt8, buf::Base.GenericIOBuffer)` : `iobuffer.jl:574`
+ - `Base.occursin(delim::UInt8, buf::IOBuffer)` : `iobuffer.jl:568`
+ - `Base.occursin(haystack)` : `strings\search.jl:724`
+ - `Base.occursin(needle::Union{AbstractChar, AbstractString}, haystack::AbstractString)` : `strings\search.jl:699`
+ - `Base.occursin(r::Regex, s::AbstractString; offset)` : `regex.jl:292`
+ - `Base.occursin(r::Regex, s::SubString{String}; offset)` : `regex.jl:297`
 Arguments:
- - `buf::Base.GenericIOBuffer`
- - `buf::Base.GenericIOBuffer{Array{UInt8,1}}`
- - `delim::UInt8`
- - `haystack::AbstractString`
- - `needle::Union{AbstractChar, AbstractString}`
- - `pattern::Tuple`
- - `r::Regex`
- - `r::Test.LogRecord`
- - `s::AbstractString`
- - `s::SubString`
+ - `delim` :: `UInt8` : Delim
+ - `buf` :: `Base.GenericIOBuffer` : Buf
+ - `buf` :: `IOBuffer` : Buf
+ - `haystack` :: `Any` : Haystack
+ - `needle` :: `Union{AbstractChar, AbstractString}` : Needle
+ - `haystack` :: `AbstractString` : Haystack
+ - `r` :: `Regex` : R
+ - `s` :: `AbstractString` : S
+ - `s` :: `SubString{String}` : S
 Keywords:
- - `offset`
+ - `offset` : Offset
 ```
 
 Documentation Example:
@@ -71,45 +68,43 @@ end
 function foobar(f::Function, m::Vector{String}; key1::Bool, key2::String)
     return nothing
 end
-
 @doc """
 $(DocumentFunction.documentfunction(foobar;
     location=false,
     maintext="Foobar function to do amazing stuff!",
     argtext=Dict("f"=>"Input function ...",
-                 "m"=>"Input string array ...")))
+                 "m"=>"Input string array ..."),
     keytext=Dict("key1"=>"Key 1 ...",
-                 "key2"=>"Key 2 ...")))                 
+                 "key2"=>"Key 2 ...")))
 """ foobar
 ```
 
-To get the help for this new function type `?foobar`.
+To get help for this new function, type `?foobar`.
 
-This will produces the following output:
+This will produce the following output:
 
 ```
-  foobar
+Main.foobar
 
   Foobar function to do amazing stuff!
 
   Methods:
 
-    •    Main.foobar(f::Function) in Main
+    •  Main.foobar(f::Function)
 
-    •    Main.foobar(f::Function, m::Array{String,1}) in Main
+    •  Main.foobar(f::Function, m::Vector{String}; key1, key2)
 
   Arguments:
 
-    •    f::Function : Input function ...
+    •  f :: Function : Input function ...
 
-    •    m::Array{String,1} : Input string array ...
-    
+    •  m :: Vector{String} : Input string array ...
+
   Keywords:
 
-    •    key1 : Key 1 ...
+    •  key1 : Key1
 
-    •    key2 : Key 2 ...    
-
+    •  key2 : Key2
 ```
 
 Projects using DocumentFunction
@@ -134,4 +129,3 @@ Publications, Presentations
 * [SmartTensors.com](https://SmartTensors.com)
 * [monty.gitlab.io](http://monty.gitlab.io)
 * [montyv.github.io](https://montyv.github.io)
-

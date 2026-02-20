@@ -3,9 +3,7 @@ __precompile__()
 """
 DocumentFunction
 
-https://github.com/madsjulia
-
-Licensing: GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+https://github.com/madsjulia/DocumentFunction.jl
 """
 module DocumentFunction
 
@@ -66,21 +64,19 @@ function _getfunctionkeywords(methods_vec::AbstractVector{Method})
 end
 
 """
-Get function methods
+Create function documentation
 
 Arguments:
 
 - `f`: function to be documented
 
-Return:
+Keywords:
 
-- array with function methods
+- `maintext`: function description
+- `argtext`: dictionary with text for each argument
+- `keytext`: dictionary with text for each keyword
+- `location`: show/hide function location on the disk
 """
-function getfunctionmethods(f::Function)
-	m = methods(f)
-	return unique(sort(string.(m.ms)))
-end
-
 function documentfunction(f::Function; location::Bool=true, maintext::AbstractString="", argtext::Dict=Dict(), keytext::Dict=Dict())
 	modulename = first(methods(f)).module
 	sprint() do io
@@ -119,7 +115,9 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 				for i = 1:l
 					arg = strip(string(a[i]))
 					if occursin("::", arg)
-						arg = first(split(arg, "::"))
+						arg, arg_type = split(arg, "::")
+					else
+						arg_type = "Any"
 					end
 					if haskey(argtext, arg)
 						at = argtext[arg]
@@ -127,7 +125,7 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 					else
 						at = uppercasefirst(replace(arg, "_"=>" "))
 					end
-					println(io, " - `$(arg)` : $(at)")
+					println(io, " - `$(arg)` :: `$(arg_type)` : $(at)")
 				end
 			end
 			a = getfunctionkeywords(f)
@@ -149,15 +147,31 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 	end
 end
 
-function get_method_from_name(m::Module, f::Function)
-	f = getfield(m, Symbol(f))
+"""
+Get function methods
+
+Arguments:
+
+- `f`: function to be documented
+
+Return:
+
+- Array with function methods
+"""
+function getfunctionmethods(f::Function)
+	m = methods(f).ms
+	return unique(sort(string.(m)))
+end
+
+# TODO currently not used but it works
+# for example: DocumentFunction.getfunctionmethods2(DocumentFunction, DocumentFunction.getfunctionmethods)
+function getfunctionmethods2(f::Function)
 	ms = first(collect(methods(f)))
 	args = Base.method_argnames(ms)
 	kwargs = Base.kwarg_decl(ms)
 	if any(kwargs .== Symbol("kw..."))
 		kwargs = kwargs[1:end-1]
 	end
-
 	return Dict{Symbol, Any}(
 		:name => f,
 		:method => ms,
@@ -165,21 +179,6 @@ function get_method_from_name(m::Module, f::Function)
 		:kwargs => kwargs
 	)
 end
-
-@doc """
-Create function documentation
-
-Arguments:
-
-- `f`: function to be documented
-
-Keywords:
-
-- `maintext`: function description
-- `argtext`: dictionary with text for each argument
-- `keytext`: dictionary with text for each keyword
-- `location`: show/hide function location on the disk
-""" documentfunction
 
 function getfunctionarguments(f::Function)
 	return _getfunctionarguments(collect(methods(f)))
@@ -203,7 +202,6 @@ function getfunctionarguments(m::AbstractVector{String})
 	end
 	return unique(mp)
 end
-
 @doc """
 Get function arguments
 
@@ -232,7 +230,6 @@ function getfunctionkeywords(m::AbstractVector{String})
 	end
 	return unique(mp)
 end
-
 @doc """
 Get function keywords
 
