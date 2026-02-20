@@ -34,6 +34,16 @@ function _is_vararg_signature(m::Method)
 	return !isempty(params) && Base.isvarargtype(params[end])
 end
 
+function _type_string(t)
+	# Match `string`-based display used by Julia signatures reasonably well.
+	# If Julia ever changes the internal representation, we fall back to `string(t)`.
+	try
+		return sprint(show, t)
+	catch
+		return string(t)
+	end
+end
+
 function _getfunctionarguments(methods_vec::AbstractVector{Method})
 	args = String[]
 	for m in methods_vec
@@ -41,13 +51,20 @@ function _getfunctionarguments(methods_vec::AbstractVector{Method})
 		if isempty(argnames)
 			continue
 		end
+		sig = Base.unwrap_unionall(m.sig)
+		# `sig.parameters` includes the function type as the first parameter.
+		# Remaining parameters correspond to positional arguments.
+		argtypes = sig.parameters[2:end]
+
 		is_vararg = _is_vararg_signature(m)
 		for (i, a) in enumerate(argnames)
 			# Legacy behavior: do not list varargs ("...")
 			if is_vararg && i == length(argnames)
 				continue
 			end
-			push!(args, string(a))
+			argname = string(a)
+			argtype = i <= length(argtypes) ? _type_string(argtypes[i]) : "Any"
+			push!(args, "$(argname)::$(argtype)")
 		end
 	end
 	return unique(args)
