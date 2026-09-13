@@ -59,6 +59,14 @@ Update `README.md`, docstrings, and relevant examples when public behavior chang
 Keep examples consistent with the public API.
 Write Markdown with one sentence per physical line when practical.
 
+Treat source-extracted signatures, types, defaults, visibility, and declared return annotations as facts, but treat generated semantic descriptions as reviewable drafts.
+Derive descriptions from existing documentation, tests, examples, implementation behavior, and call sites before using identifier-based templates.
+Do not invent domain meaning, units, accepted values, side effects, array shapes, or return guarantees when the evidence is incomplete.
+Keep unresolved descriptions as explicit `TODO` items and never auto-apply low-confidence prose.
+Store accepted output as ordinary static Julia docstrings; package loading, tests, documentation builds, and CI must not require AI, credentials, or network access.
+Render `jldoctest` examples only after they run successfully and deterministically in the target project.
+Use repository-relative paths in generated evidence and do not publish local absolute paths.
+
 ## Safety and completion
 
 Do not delete or overwrite datasets, model artifacts, cached results, figures, or user outputs without explicit authorization.
@@ -72,3 +80,9 @@ git status --short
 ```
 
 Report the checks run and any checks that were not run.
+
+For documentation-authoring changes, also run:
+
+```powershell
+julia --startup-file=no --project=. scripts/document.jl --check --require-parameters
+```

@@ -1,0 +1,81 @@
+format = 1
+
+[functions."DocumentFunction.applypatch!"]
+documented = true
+source_hash = "1efb1790f46e53f4d64e7311a6fa65f59b17666742ce68c5536a25a6e1b4cd5f"
+
+[functions."DocumentFunction.checkdocs"]
+documented = true
+source_hash = "dc16c983d5f43f926494e14d91971d67f71d0d4ab79b2fe74b70671e8bdf6a57"
+
+[functions."DocumentFunction.docpatch"]
+documented = true
+source_hash = "5e78fa9be917fbf7244ea480792f5f555bbc86dbfa7f96375ce985967b5b1ba1"
+
+[functions."DocumentFunction.documentationcontext"]
+documented = true
+source_hash = "1b52454f14bb195d3ab1a9703c80804967d8ce9da4f841a20d243102e7bf1227"
+
+[functions."DocumentFunction.documentfunction"]
+documented = true
+source_hash = "acc929d9cd01d97261e92651d3a7f3455fbda96bf21ab863881da0519b872dba"
+
+[functions."DocumentFunction.draftdocumentation"]
+documented = true
+source_hash = "40fa573f4d7b3baddf8b5b1ab4bb8eda0224e5bdb956a248078be5db95fc64eb"
+
+[functions."DocumentFunction.exampledraft"]
+documented = true
+source_hash = "01ee0feb392621b8787ea59be125373c12d9adf856c6ed4f9238ce6fcfd63f59"
+
+[functions."DocumentFunction.formatissues"]
+documented = true
+source_hash = "404958635007fe69b7cae7224b41cd85be8bd7914affe2a0045ddca30fad1784"
+
+[functions."DocumentFunction.functionspec"]
+documented = true
+source_hash = "83211395e0e15682eb7b25e1760a8e3fa28f8186d9f5e962d5704a47a9371f15"
+
+[functions."DocumentFunction.getfunctionarguments"]
+documented = true
+source_hash = "054fe8dacdf80eb15118756d31dad6a63613d835756cf6775beb985d811105a9"
+
+[functions."DocumentFunction.getfunctionkeywords"]
+documented = true
+source_hash = "eed59e9837d0962231f2274f10f9494dc7399e264d6717710c6303663bfc97fe"
+
+[functions."DocumentFunction.getfunctionmethods"]
+documented = true
+source_hash = "e0e0bf8988cff61515a244c722dc8bcb80ffbbfaa173f07f33e54a34b713db15"
+
+[functions."DocumentFunction.needsreview"]
+documented = true
+source_hash = "bb62df2394aad77ee47c4f90675cee5f0f856b7fb498c3426c796c71e3cf47bc"
+
+[functions."DocumentFunction.renderdocstring"]
+documented = true
+source_hash = "3a45597b4cf9276689bb8b61c6231f31a3d3d3ee5f2a9dc09a5b72220ccf755e"
+
+[functions."DocumentFunction.renderdocumentation"]
+documented = true
+source_hash = "d5f7c1269563f621e8bfb982ab4c9a82344ac142e65cb07c2ed3fb7b8b906eab"
+
+[functions."DocumentFunction.scan"]
+documented = true
+source_hash = "f9f9c880107dcc09989c2dc14ebf098db10666a193a3639b181e99078b08a096"
+
+[functions."DocumentFunction.scanfunctions"]
+documented = true
+source_hash = "d1750ce885e730888d92a7fb020de73718f41b7b7ad97b015e86f19612751368"
+
+[functions."DocumentFunction.verifyexample"]
+documented = true
+source_hash = "c429410a4675d732cc2f0665246fe917eb1050cc1262139d33881f963e63a55c"
+
+[functions."DocumentFunction.verifyexamples"]
+documented = true
+source_hash = "4d5497cb8e19d28e641b59ebf838065fa49df697c364152f07bcbde35b29ba0a"
+
+[functions."DocumentFunction.writeinventory"]
+documented = true
+source_hash = "7f51bbe9ef1915180785aaf06b11046eb146bdcdc2f28c96e8aec405906e4cc0"

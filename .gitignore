@@ -122,3 +122,5 @@ examples/anasol/test.mads
 examples/model_coupling_*
 */.ipynb_checkpoints/*
 Manifest.toml
+/documentation-context.md
+/.tmp-*

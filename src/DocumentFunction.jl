@@ -7,7 +7,47 @@ https://github.com/madsjulia/DocumentFunction.jl
 """
 module DocumentFunction
 
-export documentfunction, getfunctionmethods, getfunctionarguments, getfunctionkeywords
+export DescriptionDraft,
+	DocPatch,
+	DocumentationDraft,
+	DocumentationIssue,
+	ExampleDraft,
+	ExampleVerification,
+	FunctionSpec,
+	KeywordParameter,
+	MethodSpec,
+	ParameterKind,
+	ParameterSpec,
+	PositionalParameter,
+	SourceSpan,
+	applypatch!,
+	checkdocs,
+	docpatch,
+	documentationcontext,
+	documentfunction,
+	draftdocumentation,
+	exampledraft,
+	formatissues,
+	functionspec,
+	getfunctionarguments,
+	getfunctionkeywords,
+	getfunctionmethods,
+	needsreview,
+	renderdocumentation,
+	renderdocstring,
+	scan,
+	scanfunctions,
+	verifyexample,
+	verifyexamples,
+	writeinventory
+
+include("types.jl")
+include("source_scan.jl")
+include("drafting.jl")
+include("example_verification.jl")
+include("rendering.jl")
+include("context.jl")
+include("checking.jl")
 
 _METHOD_SELF_NAME = Symbol("#self#")
 
@@ -81,18 +121,31 @@ function _getfunctionkeywords(methods_vec::AbstractVector{Method})
 end
 
 """
-Create function documentation
+    documentfunction(f::Function; location=true, maintext="", argtext=Dict(), keytext=Dict())
 
-Arguments:
+Render legacy Markdown describing the methods, positional arguments, and
+keywords of `f`.
 
-- `f`: function to be documented
+# Arguments
 
-Keywords:
+- `f`: Function whose runtime methods are inspected.
 
-- `maintext`: function description
-- `argtext`: dictionary with text for each argument
-- `keytext`: dictionary with text for each keyword
-- `location`: show/hide function location on the disk
+# Keywords
+
+- `location`: Whether to include runtime-derived source locations in the Markdown.
+- `maintext`: Optional prose shown before the method list.
+- `argtext`: Descriptions keyed by exact positional-argument name strings.
+- `keytext`: Descriptions keyed by exact keyword name strings.
+
+# Returns
+
+A newline-terminated Markdown string.
+
+# Notes
+
+This compatibility API uses runtime reflection and does not retain keyword
+types, defaults, or requiredness; new documentation should use
+[`scanfunctions`](@ref) and static docstrings.
 """
 function documentfunction(f::Function; location::Bool=true, maintext::AbstractString="", argtext::Dict=Dict(), keytext::Dict=Dict())
 	modulename = first(methods(f)).module
@@ -165,15 +218,17 @@ function documentfunction(f::Function; location::Bool=true, maintext::AbstractSt
 end
 
 """
-Get function methods
+    getfunctionmethods(f::Function)
 
-Arguments:
+Return sorted, unique rendered method strings for `f`.
 
-- `f`: function to be documented
+# Arguments
 
-Return:
+- `f`: Function whose runtime method table is inspected.
 
-- Array with function methods
+# Returns
+
+A vector of rendered method strings.
 """
 function getfunctionmethods(f::Function)
 	m = methods(f).ms
@@ -220,12 +275,25 @@ function getfunctionarguments(m::AbstractVector{String})
 	return unique(mp)
 end
 @doc """
-Get function arguments
+    getfunctionarguments(f::Function)
+    getfunctionarguments(method_strings::AbstractVector{String})
 
-Arguments:
+Return unique legacy positional-argument fragments.
 
-- `f`: function to be documented"
-- `m`: function methods
+# Arguments
+
+- `f`: Function whose runtime methods are inspected with Julia reflection.
+- `m`: Rendered method strings to parse on a best-effort basis.
+
+# Returns
+
+A vector of argument strings in first-seen order.
+
+# Notes
+
+The function overload omits positional varargs and does not preserve defaults.
+The string overload is a compatibility parser, not a complete Julia syntax
+parser; use [`scanfunctions`](@ref) for source-faithful metadata.
 """ getfunctionarguments
 
 function getfunctionkeywords(f::Function)
@@ -248,12 +316,26 @@ function getfunctionkeywords(m::AbstractVector{String})
 	return unique(mp)
 end
 @doc """
-Get function keywords
+    getfunctionkeywords(f::Function)
+    getfunctionkeywords(method_strings::AbstractVector{String})
 
-Arguments:
+Return unique legacy keyword names or fragments.
 
-- `f`: function to be documented
-- `m`: function methods
+# Arguments
+
+- `f`: Function whose runtime methods are inspected with Julia reflection.
+- `m`: Rendered method strings to parse on a best-effort basis.
+
+# Returns
+
+A vector of keyword strings in first-seen order.
+
+# Notes
+
+The function overload discards keyword types, defaults, and requiredness.
+The string overload may retain raw annotations or defaults and is not a
+complete Julia syntax parser; use [`scanfunctions`](@ref) for source-faithful
+metadata.
 """ getfunctionkeywords
 
 end

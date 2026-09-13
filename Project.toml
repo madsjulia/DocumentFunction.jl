@@ -1,9 +1,15 @@
 name = "DocumentFunction"
 uuid = "e1f3b4f0-2dc4-57d3-83f7-d4b7faf3b05b"
 authors = ["Velimir V Vesselinov (monty) <velimir.vesselinov@gmail.com>"]
-version = "1.5.0"
+version = "1.6.0"
+
+[deps]
+JuliaSyntax = "70703baa-626e-46a2-a12c-08ffd08c73b4"
+SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [compat]
+JuliaSyntax = "1"
 julia = "1.11"
 
 [extras]
